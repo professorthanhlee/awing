@@ -8,35 +8,33 @@ public class TreasureService : ITreasureService
     {
         var map = new Dictionary<int, List<(int x, int y)>>();
 
-        for (var i = 0; i < n; ++i)
-        for (var j = 0; j < m; ++j)
+        for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
         {
-            var val = matrix[i][j];
-            if (!map.ContainsKey(val)) map[val] = new List<(int, int)>();
+            int val = matrix[i][j];
+            if (!map.ContainsKey(val))
+                map[val] = new List<(int, int)>();
             map[val].Add((i, j));
         }
 
-        var fuelCost = new Dictionary<(int, int), double>
-        {
-            [(0, 0)] = 0
-        };
+        var fuelCost = new Dictionary<(int, int), double> { [(0, 0)] = 0 };
+        var currentPositions = new List<(int, int)> { (0, 0) };
 
-        var currentPositions = new List<(int x, int y)> { (0, 0) };
-
-        for (var key = 1; key <= p; key++)
+        for (int key = 1; key <= p; key++)
         {
-            if (!map.ContainsKey(key)) continue;
-            var nextPositions = map[key];
+            if (!map.TryGetValue(key, out var nextPositions)) continue;
+
             var nextFuelCost = new Dictionary<(int, int), double>();
 
             foreach (var next in nextPositions)
             {
-                var minFuel = double.MaxValue;
-                foreach (var cur in currentPositions)
+                double minFuel = double.MaxValue;
+                foreach (var current in currentPositions)
                 {
-                    var dist = Math.Sqrt(Math.Pow(cur.x - next.x, 2) + Math.Pow(cur.y - next.y, 2));
-                    var totalFuel = fuelCost[cur] + dist;
-                    if (totalFuel < minFuel) minFuel = totalFuel;
+                    double dist = Math.Sqrt(Math.Pow(current.Item1 - next.x, 2) + Math.Pow(current.Item2 - next.y, 2));
+                    double totalFuel = fuelCost[current] + dist;
+                    if (totalFuel < minFuel)
+                        minFuel = totalFuel;
                 }
 
                 nextFuelCost[next] = minFuel;
@@ -46,10 +44,6 @@ public class TreasureService : ITreasureService
             currentPositions = fuelCost.Keys.ToList();
         }
 
-        var result = new TreasureResult
-        {
-            Fuel = fuelCost.Values.Min()
-        };
-        return result;
+        return new TreasureResult { Result = fuelCost.Values.Min() };
     }
 }

@@ -21,7 +21,7 @@ namespace TestSolution
                 new[] {2, 2, 1}
             };
             var result = _service.SolveTreasure(3, 3, 3, matrix);
-            Assert.Equal(4 * Math.Sqrt(2), result.Fuel, 5); 
+            Assert.Equal(4 * Math.Sqrt(2), result.Result, 5); 
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace TestSolution
                 new[] {2, 1, 1, 3}
             };
             var result = _service.SolveTreasure(3, 4, 3, matrix);
-            Assert.Equal(5.0, result.Fuel, 5);
+            Assert.Equal(5.0, result.Result, 5);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace TestSolution
                 new[] {9, 10, 11, 12}
             };
             var result = _service.SolveTreasure(3, 4, 12, matrix);
-            Assert.Equal(11.0, result.Fuel, 5);
+            Assert.Equal(11.0, result.Result, 5);
         }
     }
 }

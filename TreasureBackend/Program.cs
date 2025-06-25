@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TreasureBackend.Models;
 using TreasureBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,8 +17,11 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader();
     });
 });
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ITreasureService, TreasureService>();
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {

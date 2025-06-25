@@ -2,5 +2,5 @@
 
 public class TreasureResult
 {
-    public double Fuel { get; set; }
+    public double Result { get; set; }
 }

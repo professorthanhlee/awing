@@ -1,9 +1,14 @@
-import React from 'react';
-import './App.css';
-import TreasurePage from "./pages/TreasurePage";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import TreasurePage from './pages/TreasurePage';
+
+const queryClient = new QueryClient();
 
 function App() {
-  return <TreasurePage />;
+  return (
+      <QueryClientProvider client={queryClient}>
+        <TreasurePage />
+      </QueryClientProvider>
+  );
 }
 
 export default App;
